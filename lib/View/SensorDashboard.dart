@@ -47,36 +47,129 @@ class SensorDashboardState extends State<SensorDashboard> {
           final x = e.timestamp.millisecondsSinceEpoch.toDouble();
           return FlSpot(x, e.temperature);
         }).toList();
+        final humiditySpots = data.map((e) {
+          final x = e.timestamp.millisecondsSinceEpoch.toDouble();
+          return FlSpot(x, e.humidity);
+        }).toList();
 
         return SingleChildScrollView(
-          child: LineChart(
-            LineChartData(
-              titlesData: FlTitlesData(
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 35,
-                    getTitlesWidget: (value, _) {
-                      final date = DateTime.fromMillisecondsSinceEpoch(value.toInt());
-                      return Text(DateFormat.Hm().format(date), style: const TextStyle(fontSize: 10));
-                    },
+          child: Column(
+            children: [
+              Text("Température"),
+              Container(
+                padding: EdgeInsets.all(10),
+                height: 300.0, // Fixed height for the chart
+                child: LineChart(
+                  LineChartData(
+                    titlesData: FlTitlesData(
+                      topTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                          )
+                      ),
+                      rightTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                          )
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 35,
+                          getTitlesWidget: (value, _) {
+                            final date = DateTime.fromMillisecondsSinceEpoch(value.toInt());
+                            return Text(
+                              DateFormat('HH:mm').format(date), // Affiche uniquement les heures et minutes
+                              style: const TextStyle(fontSize: 10),
+                            );
+                          },
+                        ),
+                      ),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          getTitlesWidget: (value, _) {
+                            // Affiche la température sur l'axe Y
+                            return Text(
+                              '${value.toStringAsFixed(1)}', // Format de la température (1 chiffre après la virgule)
+                              style: const TextStyle(fontSize: 10),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: tempSpots, // tempSpots contiendra les données de température
+                        isCurved: true,
+                        barWidth: 3,
+                        color: Colors.blue,
+                        dotData: FlDotData(show: false),
+                        belowBarData: BarAreaData(show: false),
+                      ),
+                    ],
                   ),
                 ),
-                leftTitles: AxisTitles(
-                  sideTitles: SideTitles(showTitles: true),
+              ),
+
+              Text("Humidité"),
+              Container(
+                padding: EdgeInsets.all(10),
+                height: 300.0, // Fixed height for the chart
+                child: LineChart(
+                  LineChartData(
+                    titlesData: FlTitlesData(
+                      topTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                          )
+                      ),
+                      rightTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                          )
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 35,
+                          getTitlesWidget: (value, _) {
+                            final date = DateTime.fromMillisecondsSinceEpoch(value.toInt());
+                            return Text(
+                              DateFormat('HH:mm').format(date), // Affiche uniquement les heures et minutes
+                              style: const TextStyle(fontSize: 10),
+                            );
+                          },
+                        ),
+                      ),
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          getTitlesWidget: (value, _) {
+                            // Affiche la température sur l'axe Y
+                            return Text(
+                              '${value.toStringAsFixed(1)}', // Format de la température (1 chiffre après la virgule)
+                              style: const TextStyle(fontSize: 10),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: humiditySpots, // tempSpots contiendra les données de température
+                        isCurved: true,
+                        barWidth: 3,
+                        color: Colors.green,
+                        dotData: FlDotData(show: false),
+                        belowBarData: BarAreaData(show: false),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              lineBarsData: [
-                LineChartBarData(
-                  spots: tempSpots,
-                  isCurved: true,
-                  barWidth: 3,
-                  color: Colors.blue,
-                  dotData: FlDotData(show: false),
-                ),
-              ],
-            ),
-          ),
+            ],
+          )
         );
       },
     );

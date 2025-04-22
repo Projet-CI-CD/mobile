@@ -2,7 +2,7 @@ class SensorData {
   final int id;
   final String deviceId;
   final double temperature;
-  final int humidity;
+  final double humidity;
   final DateTime timestamp;
   final String type;
 
@@ -20,7 +20,7 @@ class SensorData {
       id: json['id'],
       deviceId: json['device_id'],
       temperature: json['temperature'].toDouble(),
-      humidity: json['humidity'],
+      humidity: json['humidity'].toDouble(),
       timestamp: DateTime.parse(json['timestamp']),
       type: json['type'],
     );
