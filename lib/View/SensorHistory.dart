@@ -57,6 +57,7 @@ class SensorHistoryState extends State<SensorHistory> {
     super.dispose();
   }
   void refreshData() {
+    _sensorData.clear();
     _loadSensorData();
   }
   @override
