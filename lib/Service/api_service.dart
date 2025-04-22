@@ -4,7 +4,7 @@ import '../Model/SensorData.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl ="http://127.0.0.1/";
+  final String baseUrl ="http://192.168.116.134:3000";
 
   ApiService();
 
