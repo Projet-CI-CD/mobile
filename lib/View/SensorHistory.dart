@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 
+import '../Model/Sensor.dart';
 import '../Model/SensorData.dart';
 import '../Service/api_service.dart';
 
 class SensorHistory extends StatefulWidget {
-  const SensorHistory({super.key});
+  const SensorHistory({super.key,required this.sensor});
+  final Sensor sensor;
 
   @override
   State<SensorHistory> createState() => SensorHistoryState();
@@ -37,7 +39,7 @@ class SensorHistoryState extends State<SensorHistory> {
 
     try {
       final lastItem = _sensorData.isNotEmpty ? _sensorData.last : null;
-      final newData = await ApiService().getSensorData(last: lastItem);
+      final newData = await ApiService().getSensorData(widget.sensor,last: lastItem);
 
       if (newData.isNotEmpty) {
         setState(() {
@@ -79,14 +81,12 @@ class SensorHistoryState extends State<SensorHistory> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           elevation: 2,
           child: ListTile(
-            title: Text('ID : ${sensor.deviceId}'),
+            title: Text('🕒 Date : ${DateFormat('dd-MM-yy HH:mm:ss').format(sensor.timestamp.toLocal())}'),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Température : ${sensor.temperature} °C'),
-                Text('Humidité : ${sensor.humidity} %'),
-                Text('Type : ${sensor.type}'),
-                Text('Date : ${DateFormat('dd-MM-yy HH:mm:ss').format(sensor.timestamp.toLocal())}'),
+                Text("🌡️ Température: ${sensor.temperature}°C"),
+                Text("💧 Humidité: ${sensor.humidity}%"),
               ],
             ),
           ),

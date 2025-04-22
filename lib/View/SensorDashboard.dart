@@ -1,3 +1,4 @@
+import 'package:ci_cd_mobile/Model/Sensor.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
@@ -6,7 +7,8 @@ import '../Model/SensorData.dart';
 import '../Service/api_service.dart';
 
 class SensorDashboard extends StatefulWidget {
-  const SensorDashboard({super.key});
+  const SensorDashboard({super.key,required this.sensor});
+  final Sensor sensor;
 
   @override
   State<SensorDashboard> createState() => SensorDashboardState();
@@ -23,7 +25,7 @@ class SensorDashboardState extends State<SensorDashboard> {
 
   void _loadSensorData() {
     setState(() {
-      _sensorDataFuture = ApiService().getSensorData(); // IP à adapter
+      _sensorDataFuture = ApiService().getSensorData(widget.sensor); // IP à adapter
     });
   }
   void refreshData() {

@@ -1,30 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../Model/Sensor.dart';
 import 'SensorDashboard.dart';
 import 'SensorHistory.dart'; // Assurez-vous d'importer la page Historique
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+class SensorHome extends StatefulWidget {
+  const SensorHome({super.key, required this.sensor});
+  final Sensor sensor;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<SensorHome> createState() => _SensorHomeState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
+class _SensorHomeState extends State<SensorHome> {
+  int _selectedIndex = 1;
 
   final GlobalKey<SensorDashboardState> _dashboardKey = GlobalKey();
   final GlobalKey<SensorHistoryState> _historyKey = GlobalKey();
 
   late final List<Widget> _pages = [
-    SensorDashboard(key: _dashboardKey),
-    SensorHistory(key: _historyKey),  // Assurez-vous que cette page est correctement définie
-    const Center(child: Text('Paramètres')),
+    const Center(child: Text('Retour')),
+    SensorDashboard(sensor:widget.sensor, key: _dashboardKey),
+    SensorHistory(sensor:widget.sensor, key: _historyKey),  // Assurez-vous que cette page est correctement définie
   ];
 
   void _onItemTapped(int index) {
+    if(index == 0){
+      Navigator.pop(context);
+    }
     setState(() {
       _selectedIndex = index;
     });
@@ -32,11 +36,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final bool showFab = _selectedIndex == 0 || _selectedIndex == 1;
+    final bool showFab = _selectedIndex == 1 || _selectedIndex == 2;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.sensor.deviceId),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: _pages[_selectedIndex],
@@ -44,17 +48,17 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.arrow_back), label: 'Retour'),
           BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Historique'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Paramètres'),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Historique')
         ],
       ),
       floatingActionButton: showFab
           ? FloatingActionButton(
         onPressed: () {
-          if (_selectedIndex == 0) {
+          if (_selectedIndex == 1) {
             _dashboardKey.currentState?.refreshData();
-          } else if (_selectedIndex == 1) {
+          } else if (_selectedIndex == 2) {
             _historyKey.currentState?.refreshData();
           }
         },
