@@ -1,16 +1,19 @@
 # ci_cd_mobile
 
-ci-cd-mobile
+### 📱 `mobile`
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Dans `mobile`
+    ```bash
+    flutter pub get
+    ```
+2. Modifie l'URL de l'API dans lib/Service/api_sevrice.dart:
+    ```dart	
+    final String baseUrl ="http://X.X.X.X:3000";
+    ```
+3. Lance l'application mobile:
+    ```bash
+    flutter run 
+    ```
+4. Vérifiez que:
+- Les données apparaissent dans l’application
+- L’interface réagit correctement même en cas d’erreur
