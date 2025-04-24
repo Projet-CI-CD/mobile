@@ -1,8 +1,14 @@
-name: Build Flutter App
+name: Build Flutter test
 
 on:
   push:
+    branches-ignore:
+      - main
+      - dev
   pull_request:
+    branches-ignore:
+      - main
+      - dev
 
 jobs:
   build_flutter:
