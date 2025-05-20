@@ -5,7 +5,7 @@ import '../Model/SensorData.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String baseUrl ="https://api-749292095840.europe-west9.run.app/iot";
+  final String baseUrl ="http://34.163.42.77:3000/iot";
 
   ApiService();
 
