@@ -5,26 +5,28 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:ci_cd_mobile/View/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:ci_cd_mobile/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Default test widget'
+      '', (WidgetTester tester) async {
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('HomePage contains AppBar title and FloatingActionButton', (WidgetTester tester) async {
+    // Construire la page
+    await tester.pumpWidget(MaterialApp(home: HomePage()));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Vérifier la présence du titre dans l'AppBar
+    expect(find.text('CI/CD Mobile'), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Vérifier la présence du FloatingActionButton
+    expect(find.byType(FloatingActionButton), findsOneWidget);
+
+    // Vérifier l'icône du bouton flottant
+    expect(find.byIcon(Icons.refresh), findsOneWidget);
   });
 }
